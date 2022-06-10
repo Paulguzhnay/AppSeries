@@ -1,0 +1,146 @@
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/geturi.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        var id = decodeURI(getUrlVars()["id"]);
+        var nombre = decodeURI(getUrlVars()["nombre"]);
+        var numeroC = decodeURI(getUrlVars()["numeroC"]);
+        var fechaEst = decodeURI(getUrlVars()["fechaEst"]);
+        var idTemp = decodeURI(getUrlVars()["idTemp"]);
+
+
+        $("#id").val(id);
+        $("#nombre").val(nombre);
+        $("#numeroC").val(numeroC);
+        $("#fechaEst").val(fechaEst);
+        $("#idTemp").val(idTemp);
+
+        $("#update").click(function() {
+            var id = $("#id").val();
+            var nombre = $("#nombre").val();
+            var numeroC = $("#numeroC").val();
+            var fechaEst = $("#fechaEst").val();
+            var idTemp = $("#idTemp").val();
+
+
+            var dataString = "id=" + id + "&nombre=" + nombre 
+            + "&numeroC=" + numeroC + "&fechaEst=" + fechaEst 
+            + "&idTemp=" + idTemp + "&update=";
+
+            console.log(dataString)
+            $.ajax({
+
+                type: "POST",
+                url: "https://appempleados.000webhostapp.com/updateC.php",
+                data: dataString,
+                crossDomain: true,
+                cache: false,
+                beforeSend: function() {
+                    $("#update").val('Connecting...');
+                },
+                
+                success: function(data) {
+                    if (data == "success") {
+                        alert("Updated");
+                        $("#update").val("Update");
+                    } else if (data == "error") {
+                        alert("error");
+                    }
+                }
+            });
+        });
+        $("#delete").click(function() {
+            
+            var id = $("#id").val();
+            
+            var dataString = "id=" + id + "&delete=";
+            console.log(dataString)
+            $.ajax({
+                type: "GET",
+                url: "https://appempleados.000webhostapp.com/deleteC.php",
+                data: dataString,
+                crossDomain: true,
+                cache: false,
+                beforeSend: function() {
+                    $("#delete").val('Connecting...');
+                },
+                success: function(data) {
+                    if (data == "success") {
+                        alert("Deleted");
+                        $("#delete").val("Delete");
+                    } else if (data == "error") {
+                        alert("error");
+                    }
+                }
+            });
+
+        });
+    });
+    </script>
+        <script>
+            $.getJSON('https://appempleados.000webhostapp.com/jsonT.php', function (data) {
+            var jlh = data.length;
+            var i = "";
+            console.log(data);
+            $("#idTemp").append("<option value='0'>-SELECT-</option>");
+            for (i = 0; i < jlh; i++) {
+                $("#idTemp").append( "<option value='"+data[i].temp_id+"'>" + data[i].temp_nombre + "</option>");     
+            }
+        });
+        </script>
+</head>
+
+<body>
+    <div class="bar bar-header bar-positive" style="margin-bottom:80px;background-color: blue">
+        <a href="indexC.html" class="button button-clear">Agregar Capitulo</a>
+        <h1 class="title">Base de Datos</h1>
+        <a class="button button-clear" href="listarC.html">Listar Capitulo</a>
+    </div>
+    <br/>
+    <br/>
+    <div class="list">
+        <input type="hidden" id="id" value="" />
+        <div class="item">
+            <label>Nombre del Capitulo</label>
+            <input type="text" id="nombre" value="" />
+        </div>
+        <div class="item">
+            <label>Numero del Capitulo</label>
+            <input type="text" id="numeroC" value="" />
+        </div>
+        <div class="item">
+            <label>Fecha de Estreno del capitulo</label>
+            <input type="text" id="fechaEst" value="" />
+        </div>
+        <li>
+            <div class="item-content item-input">
+              <div class="item-inner">
+                <div class="item-title item-label">Temporada </div>
+                <div class="item-input-wrap">
+                  <select name="" id="idTemp">
+
+
+                  </select>
+                </div>
+              </div>
+            </div>
+          </li>
+
+        <div class="item">
+            <input type="button" id="update" class="button button-block" value="Actualizar" />
+            <input type="button" id="delete" class="button button-block" value="Eliminar" />
+        </div>
+    </div>
+</body>
+<footer>
+    <p style="text-align: center;">Realizado Por: </p>
+    <p style="text-align: center;">Paul Guzñay</p>
+    <p style="text-align: center;">Joseph Reinoso</p>
+    <p style="text-align: left;">Copyright 2022</p>
+
+</footer>
+</html>

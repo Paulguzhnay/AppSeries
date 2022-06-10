@@ -1,0 +1,119 @@
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/geturi.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        var id = decodeURI(getUrlVars()["id"]);
+        var nombre = decodeURI(getUrlVars()["nombre"]);
+        var genero = decodeURI(getUrlVars()["genero"]);
+        var paisP = decodeURI(getUrlVars()["paisP"]);
+        var year = decodeURI(getUrlVars()["year"]);
+        $("#id").val(id);
+        $("#nombre").val(nombre);
+        $("#genero").val(genero);
+        $("#paisP").val(paisP);
+        $("#year").val(year);
+        $("#update").click(function() {
+            var id = $("#id").val();
+            var nombre = $("#nombre").val();
+            var genero = $("#genero").val();
+            var paisP = $("#paisP").val();
+            var year = $("#year").val();
+            var dataString = "id=" + id + "&nombre=" + nombre 
+            + "&genero=" + genero + "&paisP=" + paisP 
+            + "&year=" + year + "&update=";
+            console.log(dataString)
+            $.ajax({
+                type: "POST",
+                url: "https://appempleados.000webhostapp.com/updateS.php",
+                data: dataString,
+                crossDomain: true,
+                cache: false,
+                beforeSend: function() {
+                    $("#update").val('Connecting...');
+                },
+
+                success: function(data) {
+                    if (data == "success") {
+                        alert("Updated");
+                        $("#update").val("Update");
+                    } else if (data == "error") {
+                        alert("error");
+                    }
+                }
+            });
+
+        });
+        $("#delete").click(function() {
+            var id = $("#id").val();
+            var dataString = "id=" + id + "&delete=";
+            $.ajax({
+                type: "GET",
+                url: "https://appempleados.000webhostapp.com/delete.php",
+                data: dataString,
+                crossDomain: true,
+                cache: false,
+                beforeSend: function() {
+                    $("#delete").val('Connecting...');
+                },
+                success: function(data) {
+                    if (data == "success") {
+                        alert("Deleted");
+                        $("#delete").val("Delete");
+                    } else if (data == "error") {
+                        alert("error");
+                    }
+                }
+            });
+
+        });
+    });
+    </script>
+</head>
+
+<body>
+    <div class="bar bar-header bar-positive" style="margin-bottom:80px;background-color: blue">
+        <a href="indexS.html" class="button button-clear">Agregar Serie</a>
+        <h1 class="title">Base de Datos</h1>
+        <a class="button button-clear" href="listarS.html">Listar Serie</a>
+    </div>
+    <br/>
+    <br/>
+    <div class="list">
+        <input type="hidden" id="id" value="" />
+        <div class="item">
+            <label>Nombre de la Serie</label>
+            <input type="text" id="nombre" value="" />
+        </div>
+        <div class="item">
+            <label>Genero</label>
+            <input type="text" id="genero" value="" />
+        </div>
+        <div class="item">
+            <label>Pais de Produccion</label>
+            <input type="text" id="paisP" value="" />
+        </div>
+
+        <div class="item">
+            <label>Año de la Serie</label>
+            <input type="text" id="year" value="" />
+        </div>
+
+
+        <div class="item">
+            <input type="button" id="update" class="button button-block" value="Actualizar" />
+            <input type="button" id="delete" class="button button-block" value="Eliminar" />
+        </div>
+    </div>
+</body>
+<footer>
+    <p style="text-align: center;">Realizado Por: </p>
+    <p style="text-align: center;">Paul Guzñay</p>
+    <p style="text-align: center;">Joseph Reinoso</p>
+    <p style="text-align: left;">Copyright 2022</p>
+
+</footer>
+</html>

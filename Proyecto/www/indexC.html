@@ -1,0 +1,105 @@
+<html>
+
+<head >
+<title>Agregar Capitulo</title>
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/geturi.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $("#insert").click(function() {
+            var id = $("#idC").val();
+            var nombre = $("#nombreC").val();
+            var numero = $("#numeroC").val();
+            var fecha = $("#fechaC").val();
+            var idT = $("#cargo").val();
+
+            var dataString ="idC="+id + "&nombreC=" + nombre + "&numeroC=" + numero + "&fechaC=" + fecha + "&idT=" + idT + "&insert=";
+            console.log(dataString)
+            if ($.trim(id).length > 0  & $.trim(nombre).length > 0 & $.trim(numero).length > 0 & $.trim(fecha).length > 0 
+            & $.trim(idT).length > 0) {
+                $.ajax({
+                    type: "POST",
+                    url: "https://appempleados.000webhostapp.com/insertC.php",
+                    data: dataString,
+                    crossDomain: true,
+                    cache: false,
+                    beforeSend: function() {
+                        $("#insert").val('Connecting.....');
+                    },
+                    success: function(data) {
+                        if (data == "success") {
+                            alert("Insertado");
+                            $("#insert").val('submit');
+                        } else if (data == "error") {
+                            alert("error");
+                        }
+                    }
+                });
+            }
+            return false;
+        });
+    });
+    </script>   
+    <script>
+        $.getJSON('https://appempleados.000webhostapp.com/jsonT.php', function (data) {
+        var jlh = data.length;
+        var i = "";
+        console.log(data);
+        var tabla = "<option value='0'>-SELECT-</option>";
+        for (i = 0; i < jlh; i++) {
+            $("#cargo").append( "<option value='"+data[i].temp_id+"'>" + data[i].temp_nombre + "</option>");     
+        }
+    });
+    </script>
+</head>
+
+<body >
+    <div class="bar bar-header bar-positive" style="margin-bottom:80px;background-color: blue">
+        <a href="menu.html" class="button button-clear">Menu Principal</a>
+        <h1 class="title">Insertar Capitulo</h1>
+        <a class="button button-clear" href="listarC.html">Listar Capitulo</a>
+    </div>
+    <br/>
+    <br/>
+    <div class="item" >
+        <h2>ID del Capitulo</h2>
+        <input type="text"  id="idC" value="" />
+    </div>
+        <div class="item" >
+            <h2>Nombre del capitulo</h2>
+            <input type="text"  id="nombreC" value="" />
+        </div>
+        
+        <div class="item" >
+            <h2>Numero del Capitulo</h2>
+            <input type="text" id="numeroC" value="" />
+        </div>
+        <div class="item" >
+            <h2>Fecha del Estreno del Capitulo</h2>
+            <input type="text" id="fechaC" value="" />
+        </div>
+        <div class="item-content item-input">
+            <div class="item-inner">
+              <div class="item-title item-label">Nombre de la Temporada</div>
+              <div class="item-input-wrap">
+                <select name="" id="cargo">
+                </select>
+
+              </div>
+            </div>
+        </div>
+        <div class="item">
+            <input type="button" id="insert" class="button button-block" value="Agregar" style="background-color: #51d1f6;"/>
+        </div>
+    </div>
+    <footer>
+        <p style="text-align: center;">Realizado Por: </p>
+        <p style="text-align: center;">Paul Guzñay</p>
+        <p style="text-align: center;">Joseph Reinoso</p>
+        <p style="text-align: left;">Copyright 2022</p>
+
+    </footer>
+</body>
+
+</html>

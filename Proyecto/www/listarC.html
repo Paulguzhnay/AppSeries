@@ -1,0 +1,48 @@
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        var url = "https://appempleados.000webhostapp.com/jsonC.php";
+        $.getJSON(url, function(result) {
+            console.log(result);
+            $.each(result, function(i, field) {
+                var id = field.cap_id;
+                var nombre = field.cap_nombre;
+                var numeroC = field.cap_numero;
+                
+                var fechaEst = field.cap_fechaest;
+                
+                var idTemp = field.temporadas_temp_id;
+                
+                $("#listview").append("<a class='item' href='form2C.html?id=" + id + "&nombre=" + nombre + "&numeroC=" + numeroC + "&fechaEst=" + fechaEst + "&idTemp=" + idTemp + "'> <span class='item-note '> <h2> ID: " + id + "</h2></span> Nombre Capitulo: " + nombre + "<p> Numero de Capitulo: " + numeroC + "<p> Fecha Estreno: " + fechaEst + "<p> Numero Temporada: " + idTemp + "</p></a>"); 
+
+            });
+        });
+    });
+    </script>
+</head>
+
+<body>
+    <div class="bar bar-header bar-positive" style="margin-bottom:80px;background-color: blue">
+        <a href="indexC.html" class="button button-clear">Agregar Capitulo</a>
+        <h1 class="title">Base de Datos </h1>
+        <a href="menu.html" class="button button-clear">Menu Principal</a>
+    </div>
+    <br/>
+    <br/>
+    <div>
+        <ul class="list"  id="listview">
+        </ul>
+    </div>
+</body>
+<footer>
+    <p style="text-align: center;">Realizado Por: </p>
+    <p style="text-align: center;">Paul Guzñay</p>
+    <p style="text-align: center;">Joseph Reinoso</p>
+    <p style="text-align: left;">Copyright 2022</p>
+
+</footer>
+</html>

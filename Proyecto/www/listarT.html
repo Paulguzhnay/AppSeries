@@ -1,0 +1,50 @@
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        var url = "https://appempleados.000webhostapp.com/jsonT.php";
+        $.getJSON(url, function(result) {
+            console.log(result);
+            $.each(result, function(i, field) {
+                var id = field.temp_id;
+                console.log(id)
+                var nombre = field.temp_nombre;
+            
+                var numero = field.temp_numero;
+                
+                var numCapitulo = field.temp_numcapitulo;
+                
+                var serID = field.series_ser_id;
+                
+                $("#listview").append("<a class='item' href='form2T.html?id=" +  id + "&nombre=" + nombre + "&numero=" + numero + "&numCapitulo=" + numCapitulo + "&serID=" + serID + "'> <span class='item-note'> <h2> ID: " + id + "</h2></span> Nombre de la Temporada: " + nombre + "<p> Numero de Temporada: " + numero + "<p>Numero de Capitulos: " + numCapitulo + "<p>ID Serie: " + serID + "</p></a>"); 
+
+            });
+        });
+    });
+    </script>
+</head>
+
+<body>
+    <div class="bar bar-header bar-positive" style="margin-bottom:80px;background-color: blue">
+        <a href="indexT.html" class="button button-clear">Agregar Temporada</a>
+        <h1 class="title">Base de Datos </h1>
+        <a href="menu.html" class="button button-clear">Menu Principal</a>
+    </div>
+    <br/>
+    <br/>
+    <div>
+        <ul class="list"  id="listview">
+        </ul>
+    </div>
+</body>
+<footer>
+    <p style="text-align: center;">Realizado Por: </p>
+    <p style="text-align: center;">Paul Guzñay</p>
+    <p style="text-align: center;">Joseph Reinoso</p>
+    <p style="text-align: left;">Copyright 2022</p>
+
+</footer>
+</html>

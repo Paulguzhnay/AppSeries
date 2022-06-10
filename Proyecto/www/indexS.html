@@ -1,0 +1,89 @@
+<html>
+
+<head >
+<title>Agregar Empleados</title>
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/geturi.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $("#insert").click(function() {
+            var id = $("#id").val();
+            var title = $("#title").val();
+            var genero = $("#genero").val();
+            var paisproduccion = $("#paisproduccion").val();
+            var year = $("#year").val();            
+            var dataString ="id="+id + "&title=" + title + "&genero=" + genero + "&paisproduccion=" + paisproduccion+ "&year=" + year + "&insert=";
+            console.log(dataString)
+            if ($.trim(id).length > 0  & $.trim(title).length > 0 & $.trim(genero).length > 0 & $.trim(paisproduccion).length > 0 
+            & $.trim(year).length > 0) {
+                $.ajax({
+                    type: "POST",
+                    url: "https://appempleados.000webhostapp.com/insertS.php",
+                    data: dataString,
+                    crossDomain: true,
+                    cache: false,
+                    beforeSend: function() {
+                        $("#insert").val('Connecting.....');
+                    },
+                    success: function(data) {
+                        if (data == "success") {
+                            alert("Insertado");
+                            $("#insert").val('submit');
+                        } else if (data == "error") {
+                            alert("error");
+                        }
+                    }
+                });
+            }
+            return false;
+        });
+    });
+    </script>
+</head>
+
+<body >
+    <div class="bar bar-header bar-positive" style="margin-bottom:80px;background-color: blue">
+        <a href="menu.html" class="button button-clear">Menu Principal</a>
+        <h1 class="title">Detalles de la Serie</h1>
+        <a class="button button-clear" href="listarS.html">Listar Series</a>
+    </div>
+    <br/>
+    <br/>
+    <div class="item" >
+        <h2>ID de la Serie</h2>
+        <input type="text"  id="id" value="" />
+    </div>
+        <div class="item" >
+            <h2>Nombre de la Serie</h2>
+            <input type="text"  id="title" value="" />
+        </div>
+        
+        <div class="item" >
+            <h2>Genero de la Serie</h2>
+            <input type="text" id="genero" value="" />
+        </div>
+        <div class="item" >
+            <h2>Pais de Producción</h2>
+            <input type="text" id="paisproduccion" value="" />
+        </div>
+
+        <div class="item" >
+            <h2>Año de la Serie</h2>
+            <input type="text" id="year" value="" />
+        </div>
+
+        <div class="item">
+            <input type="button" id="insert" class="button button-block" value="Agregar" style="background-color: #51d1f6;"/>
+        </div>
+    </div>
+
+</body>
+<footer>
+    <p style="text-align: center;">Realizado Por: </p>
+    <p style="text-align: center;">Paul Guzñay</p>
+    <p style="text-align: center;">Joseph Reinoso</p>
+    <p style="text-align: left;">Copyright 2022</p>
+
+</footer>
+</html>
